@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:fp="http://xmlns.jcp.org/jsf/core"
+       >
+         
+       <f:metadata>
+            
+          <f:viewAction action="#{caixaBean.valores}"></f:viewAction>
+           <f:viewAction action="#{lancamentosCaixa.carregarLanca}"></f:viewAction>
+           <f:viewAction action="#{lancamentosCaixa.listar}"></f:viewAction>
+           <f:viewAction action="#{caixaBean.listar}"></f:viewAction>
+      </f:metadata>
+     
+        
+    <h:head>
+ 
+      <h:outputStylesheet library="css" name="style.css"/>
+       
+       <style type="text/css">
+        .saida {
+        background-color:  #ff1a1a !important;
+        background-image: none !important;
+        color: #ffffff !important;
+           }
+      </style>
+       <style type="text/css">
+        .entrada {
+        background-color:  #4dff4d !important;
+        background-image: none !important;
+        color: #000000 !important;
+           }
+      </style>
+       
+       <script type="text/javascript">
+       var windowObjectReference;
+       var strWindowFeatures = "menubar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes";
+
+       function listarFuncionarios() {
+       windowObjectReference = window.open("listar/listaFuncionarios.xhtml", "Listar Funcionários", strWindowFeatures);
+       }
+       </script>
+        <script type="text/javascript">
+       var windowObjectReference;
+       var strWindowFeatures = "menubar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes";
+
+       function listarUsuarios() {
+       windowObjectReference = window.open("listaUsuarios.xhtml", "Lista Usuarios", strWindowFeatures);
+       }
+       </script>
+       <script type="text/javascript">
+       var windowObjectReference;
+       var strWindowFeatures = "menubar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes";
+
+       function cadastrarUsuarios() {
+       windowObjectReference = window.open("cadastro/usuarioCadastro.xhtml", "Cadastrar Usuarios", strWindowFeatures);
+       }
+       </script>
+       
+       <script type="text/javascript">
+       var windowObjectReference;
+       var strWindowFeatures = "menubar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes";
+       function cadastrarUsuarios() {
+       windowObjectReference = window.open("listar/listaFuncionarios.xhtml", "Funcionarios", strWindowFeatures);
+       }
+       </script>
+       
+       
+       <script type="text/javascript">
+       var windowObjectReference;
+       var strWindowFeatures = "menubar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes";
+       function menuClientes() {
+       windowObjectReference = window.open("listar/listaClientes.xhtml", "Funcionarios", strWindowFeatures);
+       }
+       </script>
+       
+       
+       
+     <title>Loft Sistemas de Automação Comercial</title> 
+      
+     </h:head> 
+     
+     <h:body>
+     <p:growl id="mensagem"/>
+      <p:layout fullPage="true">
+       
+         <p:layoutUnit header="Sistema Livro Caixa 1.0 HOME" position="north" size="50"
+            resizable="false" closable="false" collapsible="false" style="font-size:20px ;
+            font-weight:bold ; font-style: italic;">
+             <h:form> 
+            <p:toolbar style="height:30px;" >
+               <f:facet name="left">
+                   
+                    <p:outputLabel value="Bem vindo: #{autenticacaoBean.userLogin.funcionario.nome}"
+                        style=" position: relative;left: 5px;" />
+                      
+                    <p:commandButton value="Sair"
+                        icon="fa fa-close"
+                        action="#{autenticacaoBean.sair}"
+                        update="mensagem"
+                        style="height:34px;width:110px; text-align:center;position: relative;left: 1110px;
+                        color:#ffffff; background:#00004d" 
+                          />
+                       
+                </f:facet>
+            </p:toolbar>
+           </h:form> 
+        </p:layoutUnit>
+
+        <p:layoutUnit header="Loft Sistemas de Automação e Controle "
+            position="south" resizable="false" closable="false"
+            collapsible="false">
+            <p:outputLabel value="#{usuarioBean.dataForm}"
+                        style=" position: relative;left: 1365px;" /> 
+        </p:layoutUnit>
+
+        <p:layoutUnit header="Menu Inicial" size="225" position="west"
+            resizable="false" closable="false" collapsible="false">
+            <h:form>
+
+                <p:panelMenu
+                     >
+                    <p:submenu label="Opções">
+                        <p:menuitem value="Página Principal" 
+                        action="#{usuarioBean.inicialPage}"
+                         icon="fa fa-home"
+                        style="font-size:14px ;
+                        font-weight:bold ; font-style: italic;"
+                        />
+                        <p:menuitem value="Registro" action="#{inicioBean.registro}"
+                         icon="fa fa-list-alt"
+                        style="font-size:14px ;
+                        font-weight:bold ; font-style: italic;"
+                        actionListener="#{registroBean.listar}"
+                    
+                        update="mensagem "
+                         />
+                        <p:menuitem value="Sair" action="#{autenticacaoBean.sair}"
+                         icon="fa fa-close"
+                        style="font-size:14px ;
+                        font-weight:bold ; font-style: italic;"
+                        update="mensagem"
+                         />
+                    </p:submenu>
+                   <p:submenu label="Funcionários">
+                        <p:menuitem value="Funcionários"
+                          action="#{inicioBean.funcionario}"
+                          icon="fa fa-male"
+                        style="font-size:14px ;
+                        font-weight:bold ; font-style: italic;"/>
+                    </p:submenu>
+                    
+                    <p:submenu label="Usuários" 
+                     rendered="#{autenticacaoBean.userLogin.perfil=='ADMINISTRADOR'}">
+                      <p:menuitem value="Usuários"
+                         action="#{inicioBean.usuario}"
+                         icon="fa fa-user-plus"
+                        style="font-size:14px ;
+                        font-weight:bold ; font-style: italic;"/>
+                    </p:submenu>
+                   
+                    <p:submenu label="Caixa/Lançamentos">
+                     <p:menuitem value="Caixa" 
+                         action="#{inicioBean.listaCaixa}"
+                         icon="fa fa-file-text"
+                         style="font-size:14px ;
+                         font-weight:bold ; font-style: italic;"/>
+                         <p:menuitem value="Movimento de Caixa" 
+                         action="#{inicioBean.listaLancamentos}"
+                         icon="fa fa-file-text"
+                         style="font-size:14px ;
+                         font-weight:bold ; font-style: italic;"/>
+                     </p:submenu>
+                 </p:panelMenu>
+
+            </h:form>
+
+        </p:layoutUnit>
+  <p:layoutUnit position="center" resizable="false" closable="false"
+            collapsible="false">
+            <ui:insert name="conteudo" />
+            <h:panelGrid>
+               <div style="height:5 px">
+        <h:form>
+        <p:growl id="msgs" showDetail="true" />
+         <h:form>
+           <h:panelGrid columns="3" >           
+            <p:panel id="finance" header="Total de Entradas/Receitas" styleClass="totalCliente"
+              style="width:380px;height:110px;color:#ffffff; background:#80e5ff "   >
+                 <p:outputLabel value="R$" style=" position:absolute;
+                 top:59px;
+                 left: 22px; font-size:28px ; font-weight:bold ;color:#ffffff "/>
+                 <h:outputText value="#{lancamentosCaixa.entrada}" 
+                 style="top:-10px ; position: relative;left:42px; font-size:50px ; font-weight:bold ;color:#ffffff " >
+                  
+                 </h:outputText>
+                <div class="ui-grid-col-1"><h1><i class="fa fa-cloud-upload" style="color:#ffffff;"></i></h1></div>
+             </p:panel>
+ 
+            <p:panel id="lifestyle" header="Total disponivel em Caixa" styleClass="totalOrcamentos" 
+            style="width:380px;height:110px;color:#ffffff; background:#00ff55; left:350px"  >
+                 <p:outputLabel value="R$" style=" position:absolute;
+                 top:59px; 
+                 left: 432px; font-size:28px ; font-weight:bold ;color:#ffffff "/>
+                 <h:outputText value=" #{caixaBean.valor}" 
+                 style="top:-10px ; position: relative;left: 20px; font-size:50px ; font-weight:bold ;color:#ffffff " >
+                 <f:convertNumber locale="pt_BR" minFractionDigits="2" />
+                </h:outputText>
+                <div class="ui-grid-col-1"><h1><i class="fa fa-smile-o" style="color:#ffffff;"></i></h1></div>
+            </p:panel>
+            
+            <p:panel id="prod" header="Total de Saídas/Despesas" styleClass="totalOrcamentos" 
+            style="width:380px;height:110px;color:#ffffff; background:#ff3333; left:350px"  >
+                 <p:outputLabel value="R$" style=" position:absolute;
+                 top:59px;
+                 left: 846px; font-size:28px ; font-weight:bold ;color:#ffffff "/>
+                 <p:outputLabel value=" #{lancamentosCaixa.valor}" 
+                style="top:-10px ; position: relative;left: 30px; font-size:50px ; font-weight:bold ;color:#ffffff " />
+                <div class="ui-grid-col-1"><h1><i class="fa fa-cloud-download" style="color:#ffffff;"></i></h1></div>
+            </p:panel>
+            </h:panelGrid>
+            
+          <hr/> 
+   <h:panelGrid columns="2" >         
+   <p:panel id="sports" header="Lançamentos efetuados" styleClass="ocupada" style="width:750px;height:320px;
+         background:#d1e0e0; font-size:11px ;" >
+             <p:dataTable  id="tabLancamentos" var="lanca" value="#{lancamentosCaixa.lancamentos}"  rows="6"  widgetVar="carsTable"
+                 styleClass="myTable"
+                 paginator="true"
+                 editable="true" 
+                 rowStyleClass="#{lanca.tipo eq  'Saída' ? 'saida' : null || lanca.tipo eq  'Entrada' ? 'entrada' : null }"
+                 rowsPerPageTemplate="5,10,15"
+                 rendered="true"
+                 emptyMessage="Nenhum lançaemento registrado"
+                 >
+            <f:facet name="header">
+             <p:row  styleClass="ocupada" >
+            <p:column colspan="7">Lançamentos </p:column>
+            </p:row>
+         </f:facet>         
+        <p:column headerText="Id" width="7%" style="font-size:10px ;
+            font-weight:bold ;">
+            <h:outputText value="#{lanca.codigo}" style="font-size:10px ;
+            font-weight:bold ;" />
+        </p:column>
+ 
+        <p:column headerText="Caixa" width="18%" style="font-size:10px ;
+            font-weight:bold ;" filterBy="#{lanca.caixa.descricao}" filterMatchMode="contains">
+            <h:outputText value="#{lanca.caixa.descricao}" style="font-size:10px ;
+            font-weight:bold ;"/>
+        </p:column>
+ 
+        <p:column headerText="Tipo" width="18%" style="font-size:10px ;
+            font-weight:bold ;" filterBy="#{lanca.tipo}"  filterMatchMode="exact">
+            <f:facet name="filter">
+                <p:selectOneMenu  onchange="PF('carsTable').filter()" styleClass="custom-filter" >
+                    <f:selectItem itemLabel="Escolha um tipo" itemValue="#{null}" noSelectionOption="true"  />
+                    <f:selectItem itemLabel="Entrada" itemValue="Entrada" />
+				    <f:selectItem itemLabel="Saída" itemValue="Saída" />
+                </p:selectOneMenu>
+            </f:facet>
+            <h:outputText value="#{lanca.tipo}" style="font-size:10px ;
+            font-weight:bold ;"/>
+        </p:column>
+  
+         <p:column headerText="Valor" width="10%" style="font-size:10px ;
+            font-weight:bold ;">
+            <h:outputText value="#{lanca.valor}" style="font-size:10px ;
+            font-weight:bold ;">
+            <f:convertNumber locale="pt_BR" minFractionDigits="2"/>
+            </h:outputText>
+        </p:column>
+        
+        <p:column headerText="Histórico" style="font-size:10px ;
+            font-weight:bold ;">
+            <h:outputText value="#{lanca.historicoLancamento}" style="font-size:10px ;
+            font-weight:bold ;"/>
+        </p:column>
+        
+        
+        <p:column headerText="Data" width="10%" style="font-size:10px ;
+            font-weight:bold ;">
+            <h:outputText value="#{lanca.data}" style="font-size:10px ;
+            font-weight:bold ;">
+            <f:convertDateTime locale="pt_BR"/>
+            </h:outputText>
+        </p:column>
+        
+         <p:column headerText="Forma" width="17%" style="font-size:10px ;
+            font-weight:bold ;">
+            <h:outputText value="#{lanca.formapgto}" style="font-size:10px ;
+            font-weight:bold ;"/>
+        </p:column>
+          
+       <f:facet name="paginatorTopLeft">
+            <p:commandButton type="button" icon="pi pi-refresh" />
+       </f:facet>
+     <f:facet name="paginatorBottomRight">
+            <p:commandButton type="button" icon="pi pi-cloud-upload" />
+        </f:facet>
+     </p:dataTable>
+     </p:panel>
+     
+     <p:panel id="caixa" header="Caixas" styleClass="ocupada" style="width:450px;height:320px;
+         background:#d1e0e0; font-size:11px ;" >
+         
+          <p:dataTable  id="tabCaixas" var="caixas" value="#{caixaBean.caixas}"  rows="8"
+                 paginator="true"
+                 editable="true" 
+                 rowsPerPageTemplate="5,10,15"
+                 rendered="true"
+                 emptyMessage="Nenhum Caixa Cadastrado">
+        <f:facet name="header">
+             <p:row style="background-color:#000000;" >
+             <p:column colspan="7" > Lista de Caixas </p:column>
+            </p:row>
+         </f:facet>         
+        <p:column headerText="Id" width="7%" style="font-size:10px ;
+            font-weight:bold ;">
+            <h:outputText value="#{caixas.codigo}" style="font-size:10px ;
+            font-weight:bold ;"/>
+        </p:column>
+ 
+        <p:column headerText="Numero" width="10%" style="font-size:10px ;
+            font-weight:bold ;">
+            <h:outputText value="#{caixas.codNumero}" style="font-size:10px ;
+            font-weight:bold ;" />
+        </p:column>
+ 
+        <p:column headerText="Descrição" style="font-size:10px ;
+            font-weight:bold ;">
+            <h:outputText value="#{caixas.descricao}" style="font-size:10px ;
+            font-weight:bold ;"/>
+        </p:column>
+  
+         <p:column headerText="Saldo" width="15%" style="font-size:10px ;
+            font-weight:bold ;">
+            <h:outputText value="#{caixas.saldo}" style="font-size:10px ;
+            font-weight:bold ;" >
+            <f:convertNumber locale="pt_BR" minFractionDigits="2"/>
+            </h:outputText>
+        </p:column>
+         
+       <f:facet name="paginatorTopLeft">
+            <p:commandButton type="button" icon="pi pi-refresh" />
+       </f:facet>
+     <f:facet name="paginatorBottomRight">
+            <p:commandButton type="button" icon="pi pi-cloud-upload" />
+        </f:facet>
+     </p:dataTable>
+         
+         </p:panel>
+   </h:panelGrid> 
+        </h:form>
+        <div style="clear:both" />
+    </h:form>
+</div>
+            </h:panelGrid>
+
+        </p:layoutUnit>
+    </p:layout>
+ </h:body> 
+</html>
